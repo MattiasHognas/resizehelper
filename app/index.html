@@ -22,12 +22,11 @@
                 <div class="col-md-3">
                     <h2>Images</h2>
 
-                    <button data-bind="click: function() { addImage() }" type="button" class="btn btn-sm btn-success">
+                    <button data-bind="click: function() { addImage({ editMode: true }) }" type="button" class="btn btn-sm btn-success">
                         Add new image&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
                     </button>
 
-                    <!-- ko if: images().length > 0 -->
-                    <table class="table">
+                    <table data-bind="if: images().length > 0" class="table">
                         <thead>
                             <tr>
                                 <th colspan="2">Name</th>
@@ -40,11 +39,12 @@
                                     <button data-bind="click: function() { $root.removeImage(id) }" type="button" class="btn btn-sm btn-danger">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
+                                    <p data-bind="if: editMode">in edit mode!</p>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <!-- /ko -->
+                    
                 </div>
                 
                 <div class="col-md-9">
@@ -63,14 +63,10 @@
                                         Add new size&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
                                     </button>
 
-                                    <!-- ko if: activeImage().sizes().length > 0 -->
-                                    <table class="table">
+                                    <table data-bind="if: activeImage().sizes().length > 0" class="table">
                                         <thead>
                                             <tr>
-                                                <th>Width</th>
-                                                <th style="text-align: right;">
-                                                    
-                                                </th>
+                                                <th colspan="2">Width</th>
                                             </tr>
                                         </thead>
                                         <tbody data-bind="foreach: activeImage().sizes">
@@ -89,7 +85,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <!-- /ko -->
                                 </div>
 
                                 <!-- ko if: activeImage().sizes().length > 0 || activeImage().breakpoints().length > 0 -->

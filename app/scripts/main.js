@@ -38,7 +38,8 @@
     var defaults = {
         image: {
             name: 'image',
-            active: false
+            active: false,
+            editMode: false
         },
         size: {
             name: 'size',
@@ -95,11 +96,14 @@
 
         self.id = set.id;
         self.name = set.name;
+        self.editMode = set.editMode;
         self.sizes = ko.observableArray(set.sizes);
         self.breakpoints = ko.observableArray(set.breakpoints);
         self.defaultBreakpoint = ko.observable(set.defaultBreakpoint);
         self.active = ko.observable(set.active);
 
+        // there's some problem with this where it doesnt change
+        // even though data has been added or removed.
         self.output = ko.computed(function() {
             var outputHtml = '&lt;img ';
             var sizes = self.sizes();
