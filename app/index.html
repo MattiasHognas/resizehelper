@@ -34,12 +34,18 @@
                         </thead>
                         <tbody data-bind="foreach: images">
                             <tr data-bind="click: function() { $root.setActiveImage(id) }, css: { active: active() }" style="cursor: pointer;">
-                                <td data-bind="text: name"></td>
+                                <td style="vertical-align: middle;">
+                                    <span data-bind="visible: !editMode(), text: name, click: edit"></span>
+                                    <input type="text" data-bind="visible: editMode, value: name, hasFocus: editMode"/>
+                                </td>
                                 <td style="text-align: right;">
                                     <button data-bind="click: function() { $root.removeImage(id) }" type="button" class="btn btn-sm btn-danger">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
-                                    <p data-bind="if: editMode">in edit mode!</p>
+                                    <!-- <p data-bind="text: showProperties"></p>
+                                    <p data-bind="text: editMode"></p>
+                                    <p data-bind="text: sizes().length"></p>
+                                    <p data-bind="text: breakpoints().length"></p> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -48,7 +54,7 @@
                 </div>
                 
                 <div class="col-md-9">
-                    <!-- ko if: !$.isEmptyObject(activeImage()) -->
+                    <!-- ko if: !$.isEmptyObject(activeImage()) && activeImage().showProperties() -->
                     <h2>Image properties</h2>
 
                     <div class="row">

@@ -39,7 +39,8 @@
         image: {
             name: 'image',
             active: false,
-            editMode: false
+            editMode: false,
+            showProperties: false
         },
         size: {
             name: 'size',
@@ -95,12 +96,23 @@
         var set = $.extend({}, defaults.image, options);
 
         self.id = set.id;
-        self.name = set.name;
-        self.editMode = set.editMode;
+        self.name = ko.observable(set.name);
+        self.editMode = ko.observable(set.editMode);
         self.sizes = ko.observableArray(set.sizes);
         self.breakpoints = ko.observableArray(set.breakpoints);
         self.defaultBreakpoint = ko.observable(set.defaultBreakpoint);
         self.active = ko.observable(set.active);
+        self.showProperties = ko.observable(set.showProperties);
+
+        self.edit = function() {
+            self.editMode(true);
+        };
+
+        ko.computed(function() {
+            if(!self.showProperties() && !self.editMode()) {
+                self.showProperties(true);
+            }
+        });
 
         // there's some problem with this where it doesnt change
         // even though data has been added or removed.
@@ -109,6 +121,7 @@
             var sizes = self.sizes();
             var breakpoints = self.breakpoints();
             var defaultBreakpoint = self.defaultBreakpoint();
+            var name = self.name();
 
             if (sizes.length > 0) {
                 outputHtml += 'srcset="';
@@ -143,7 +156,7 @@
 
             outputHtml += '(' + defaultBreakpoint.type() + ': ' + defaultBreakpoint.breakWidth() + 'px) ' + defaultBreakpoint.displayWidth() + defaultBreakpoint.unit() + '"';
             outputHtml += '&NewLine;' + spaces(5);
-            outputHtml += 'alt="' + self.name + '" /&gt;';
+            outputHtml += 'alt="' + name + '" /&gt;';
 
             return outputHtml;
         });
