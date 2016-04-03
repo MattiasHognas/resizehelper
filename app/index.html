@@ -71,7 +71,7 @@
                                                 <th colspan="2">Width</th>
                                             </tr>
                                         </thead>
-                                        <tbody data-bind="foreach: activeImage().sizes">
+                                        <tbody data-bind="sortable: activeImage().sizes">
                                             <tr>
                                                 <td>
                                                     <div class="input-group">
@@ -235,10 +235,12 @@
         <footer>
             <!-- Scripts -->
             <script src="scripts/vendor/jquery-1.11.3.min.js"></script>
+            <script src="scripts/vendor/jquery-ui.min.js"></script>
             <script src="scripts/vendor/amplify.min.js"></script>
             <script src="scripts/vendor/underscore-min.js"></script>
             <script src="scripts/vendor/knockout-3.4.0.js"></script>
             <script src="scripts/vendor/knockout.mapping-latest.js"></script>
+            <script src="scripts/vendor/knockout-sortable.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 
             <!-- Custom scripts -->
