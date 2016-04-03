@@ -19,3 +19,16 @@
     padding-right: 20px;
   }
 }
+
+.sortable-handle {
+  cursor: move;
+}
+
+.table {
+  tr {
+    background-color: white;
+  }
+  td {
+    vertical-align: center;
+  }
+}

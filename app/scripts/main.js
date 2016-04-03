@@ -124,28 +124,33 @@
                     outputHtml += 'http://placehold.it/' + sizeWidth + 'x' + sizeWidth + ' ' + sizeWidth + 'w';
 
                     if (iteration != sizes.length) {
-                        outputHtml += ',&NewLine;';
-                        outputHtml += spaces(13);   
+                        outputHtml += ',&NewLine;' + spaces(13);
                     } else {
                         outputHtml += '"';
                     }
                 }
-                outputHtml += '&NewLine;';
-                outputHtml += spaces(5);
+                outputHtml += '&NewLine;' + spaces(5);
             }
 
-            outputHtml += 'sizes="';
+            
 
             if (breakpoints.length > 0) {
+                outputHtml += 'sizes="';
                 for (var key in breakpoints) {
                     var breakpoint = breakpoints[key];
+                    var iteration = parseInt(key) + 1;
 
-                    outputHtml += '(' + breakpoint.type() + ': ' + breakpoint.breakWidth() + 'px) ' + breakpoint.displayWidth() + breakpoint.unit() + ',';
-                    outputHtml += '&NewLine;' + spaces(12);
+                    outputHtml += '(' + breakpoint.type() + ': ' + breakpoint.breakWidth() + 'px) ' + breakpoint.displayWidth() + breakpoint.unit();
+
+                    if (iteration != breakpoints.length) {
+                        outputHtml += ',&NewLine;' + spaces(12);
+                    } else {
+                        outputHtml += '"';
+                    }
                 }
+                outputHtml += '&NewLine;' + spaces(5);
             }
 
-            outputHtml += '&NewLine;' + spaces(5);
             outputHtml += 'alt="' + name + '" /&gt;';
 
             return outputHtml;
@@ -164,7 +169,6 @@
         var set = $.extend({}, defaults.breakpoint, options);
 
         self.id = set.id;
-        self.sort = ko.observable(set.sort);
         self.type = ko.observable(set.type);
         self.breakWidth = ko.observable(set.breakWidth);
         self.displayWidth = ko.observable(set.displayWidth);
@@ -172,7 +176,7 @@
 
         self.verboseType = function() {
             if(self.type() === 'min-width') return 'larger than';
-            if(self.type() === 'max-width') return 'less than';
+            if(self.type() === 'max-width') return 'smaller than';
         }
 
         // Test will check if the parameter displayWidth fits inside the breakpoint,
@@ -303,29 +307,15 @@
             self.activeImage().sizes.remove( function(size) { return size.id == id });
         }
         self.addBreakpoint = function(options) {
-            // generate unique id and sort
+            // generate unique id
             var newId = genUniqueProperty(self.activeImage().breakpoints(), 'id');
-            var newSort = genUniqueProperty(self.activeImage().breakpoints(), 'sort');
-            options = $.extend({}, options, { 
-                id: newId,
-                sort: newSort
-            });
+            options = $.extend({}, options, { id: newId });
 
             // create the new breakpoint
             self.activeImage().breakpoints.push(new Breakpoint(options));
         }
         self.removeBreakpoint = function(id) {
-            var breakpoint = ko.utils.arrayFirst(self.activeImage().breakpoints(), function(item) { return item.id === id });
-            var removedPosition = breakpoint.sort();
-            self.activeImage().breakpoints.remove(breakpoint);
-
-            for (var key in self.activeImage().breakpoints()) {
-                var item = self.activeImage().breakpoints()[key];
-
-                if (item.sort() > removedPosition) {
-                    item.sort(item.sort() - 1);
-                }
-            }
+            self.activeImage().breakpoints.remove( function(breakpoint) { return breakpoint.id == id });
         }
         self.addDevice = function(options) {
             var newId = genUniqueProperty(self.devices(), 'id');
@@ -336,18 +326,6 @@
         }
         self.removeDevice = function(id) {
 
-        }
-
-        self.breakpointSort = function(pos, delta) {
-            var me = ko.utils.arrayFirst(self.activeImage().breakpoints(), function(item) { return item.sort() === pos });
-            var sibling = ko.utils.arrayFirst(self.activeImage().breakpoints(), function(item) { return item.sort() === pos + delta });
-
-            me.sort(me.sort() + delta);
-            sibling.sort(sibling.sort() + delta * -1);
-
-            self.activeImage().breakpoints.sort(function (left, right) {
-                return left.sort() > right.sort() ? 1 : -1;
-            });
         }
 
         self.updateOuput = ko.computed(function() {
@@ -369,7 +347,16 @@
 
     $.map(initialDevices, function (item) { viewmodel.addDevice(item); });
 
+    ko.bindingHandlers.selected = {
+        update: function(element, valueAccessor) {
+            var value = ko.unwrap(valueAccessor());
+
+            if (value) element.select();
+        }
+    }
 
     ko.applyBindings(viewmodel);
+
+
 
 })();
