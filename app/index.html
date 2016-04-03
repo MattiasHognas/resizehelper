@@ -42,10 +42,6 @@
                                     <button data-bind="click: function() { $root.removeImage(id) }" type="button" class="btn btn-sm btn-danger">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
-                                    <!-- <p data-bind="text: showProperties"></p>
-                                    <p data-bind="text: editMode"></p>
-                                    <p data-bind="text: sizes().length"></p>
-                                    <p data-bind="text: breakpoints().length"></p> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -151,39 +147,6 @@
                                         </tbody>
                                     </table>
                                     <!-- /ko -->
-                                    <table class="table table-condensed">
-                                        <tbody data-bind="with: activeImage().defaultBreakpoint">
-                                            <tr>
-                                                <td colspan="4" style="border-top: 0;">
-                                                    Default query:
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon" data-bind="text: type() + ':'"></span>
-                                                        <input type="number" class="form-control" data-bind="value: breakWidth">
-                                                        <span class="input-group-addon">px</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="input-group input-group-sm">
-                                                        <input type="number" class="form-control" data-bind="value: displayWidth">
-                                                        <div class="input-group-btn">
-                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span data-bind="text: unit"></span> <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                                <li>
-                                                                    <a href="#" data-bind="click: function() { unit('vw') }">vw</a>
-                                                                    <a href="#" data-bind="click: function() { unit('px') }">px</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td colspan="2"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                                 <!-- /ko -->
 

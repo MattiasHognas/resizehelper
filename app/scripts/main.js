@@ -52,13 +52,6 @@
             displayWidth: 50,
             unit: 'vw'
         },
-        defaultBreakpoint: {
-            id: 0,
-            type: 'min-width',
-            breakWidth: 0,
-            displayWidth: 1600,
-            unit: 'px'
-        },
         device: {
             name: 'device',
             width: 0,
@@ -100,7 +93,6 @@
         self.editMode = ko.observable(set.editMode);
         self.sizes = ko.observableArray(set.sizes);
         self.breakpoints = ko.observableArray(set.breakpoints);
-        self.defaultBreakpoint = ko.observable(set.defaultBreakpoint);
         self.active = ko.observable(set.active);
         self.showProperties = ko.observable(set.showProperties);
 
@@ -120,7 +112,6 @@
             var outputHtml = '&lt;img ';
             var sizes = self.sizes();
             var breakpoints = self.breakpoints();
-            var defaultBreakpoint = self.defaultBreakpoint();
             var name = self.name();
 
             if (sizes.length > 0) {
@@ -154,7 +145,6 @@
                 }
             }
 
-            outputHtml += '(' + defaultBreakpoint.type() + ': ' + defaultBreakpoint.breakWidth() + 'px) ' + defaultBreakpoint.displayWidth() + defaultBreakpoint.unit() + '"';
             outputHtml += '&NewLine;' + spaces(5);
             outputHtml += 'alt="' + name + '" /&gt;';
 
@@ -214,7 +204,7 @@
             var sizeFound = false;
 
             if(!$.isEmptyObject(viewmodel.activeImage()) && viewmodel.activeImage().sizes().length > 0) { // <-- check if there are sizes to calculate with
-                var displayWidth = viewmodel.activeImage().defaultBreakpoint().test(self.width);
+                var displayWidth;
 
                 for (var key1 in viewmodel.activeImage().sizes()) {
                     var size = viewmodel.activeImage().sizes()[key1];
@@ -258,11 +248,8 @@
             // generate unique id
             var newId = genUniqueProperty(self.images(), 'id');
             
-            // merge id and a defaultBreakpoint to the options
-            options = $.extend({}, options, { 
-                id: newId,
-                defaultBreakpoint: new Breakpoint(defaults.defaultBreakpoint)
-            });
+            // merge id to the options
+            options = $.extend({}, options, { id: newId });
 
             // create the new image
             self.images.push(new Image(options));
