@@ -103,15 +103,25 @@
                                     <table class="table table-condensed">
                                         <thead>
                                             <tr>
-                                                <th>Query</th>
-                                                <th colspan="3">Width</th>
+                                                <th>When the viewport is:</th>
+                                                <th colspan="3">The image will be shown at:</th>
                                             </tr>
                                         </thead>
                                         <tbody data-bind="foreach: activeImage().breakpoints">
                                             <tr>
                                                 <td>
                                                     <div class="input-group input-group-sm">
-                                                        <span class="input-group-addon" data-bind="text: type() + ':'"></span>
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                                <span data-bind="text: verboseType()"></span>&nbsp;<span class="caret"></span>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-menu-left">
+                                                                <li>
+                                                                    <a href="#" data-bind="click: function() { type('min-width') }">larger than</a>
+                                                                    <a href="#" data-bind="click: function() { type('max-width') }">less than</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                         <input type="number" class="form-control" data-bind="value: breakWidth">
                                                         <span class="input-group-addon">px</span>
                                                     </div>
@@ -120,7 +130,9 @@
                                                     <div class="input-group input-group-sm">
                                                         <input type="number" class="form-control" data-bind="value: displayWidth">
                                                         <div class="input-group-btn">
-                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span data-bind="text: unit"></span> <span class="caret"></span></button>
+                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                                <span data-bind="text: unit"></span>&nbsp;<span class="caret"></span>
+                                                            </button>
                                                             <ul class="dropdown-menu dropdown-menu-right">
                                                                 <li>
                                                                     <a href="#" data-bind="click: function() { unit('vw') }">vw</a>

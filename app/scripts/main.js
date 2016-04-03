@@ -170,6 +170,11 @@
         self.displayWidth = ko.observable(set.displayWidth);
         self.unit = ko.observable(set.unit);
 
+        self.verboseType = function() {
+            if(self.type() === 'min-width') return 'larger than';
+            if(self.type() === 'max-width') return 'less than';
+        }
+
         // Test will check if the parameter displayWidth fits inside the breakpoint,
         // so if the breakpoint is 'min-width': 1600 px, then the displayWidth needs
         // to be 1600px or larger.
