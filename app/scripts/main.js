@@ -44,7 +44,8 @@
         },
         size: {
             name: 'size',
-            width: '100'
+            width: '100',
+            editing: undefined
         },
         breakpoint: {
             type: 'max-width',
@@ -132,8 +133,6 @@
                 outputHtml += '&NewLine;' + spaces(5);
             }
 
-            
-
             if (breakpoints.length > 0) {
                 outputHtml += 'sizes="';
                 for (var key in breakpoints) {
@@ -161,8 +160,22 @@
         var set = $.extend({}, defaults.size, options);
 
         self.id = set.id;
-        self.name = set.name;
+        self.name = ko.observable(set.name);
         self.width = ko.observable(set.width);
+        self.editing = ko.observable();
+
+        if(set.editing !== undefined) {
+            self.editing(self[set.editing]);
+        }
+        self.isEditing = function(value) {
+            return value === self.editing();
+        };
+        self.clearEdit = function(value) {
+            if (value === self.editing()) {
+                self.editing(null);
+            }
+        }
+
     }
     function Breakpoint(options) {
         var self = this;
@@ -250,7 +263,7 @@
         var self = this;
 
         self.images = ko.observableArray();
-        self.activeImage = ko.observable({});
+        self.activeImage = ko.observable(new Image());
         self.devices = ko.observableArray();
 
         self.addImage = function(options) {
@@ -293,7 +306,7 @@
             self.activeImage(image);
         }
         self.clearActiveImage = function() {
-            self.activeImage({});
+            self.activeImage(new Image());
         }
         self.addSize = function(options) {
             // generate unique id
@@ -301,7 +314,8 @@
             options = $.extend({}, options, { id: newId });
 
             // create the new size
-            self.activeImage().sizes.push(new Size(options));
+            var size = new Size(options);
+            self.activeImage().sizes.push(size);
         }
         self.removeSize = function(id) {
             self.activeImage().sizes.remove( function(size) { return size.id == id });
@@ -340,16 +354,30 @@
 
     // setting up some initial data, this will be moved once local storage is implemented.
     // also, intitial data might be removed once the 'intro' is in place.
+
     viewmodel.addImage({ name: 'Example image' });
     viewmodel.addSize({ width: 1600 });
-    viewmodel.addSize({ width: 1200 });
-    viewmodel.addSize({ width: 2000 });
+    /*viewmodel.addSize({ width: 1200 });
+    viewmodel.addSize({ width: 2000 });*/
 
     $.map(initialDevices, function (item) { viewmodel.addDevice(item); });
+
+    ko.bindingHandlers.visibleAndSelect = {
+        update: function(element, valueAccessor) {
+            ko.bindingHandlers.visible.update(element, valueAccessor);
+            
+            if (valueAccessor()) {
+                /*setTimeout(function() {*/
+                    $(element).find('input').focus().select();
+                /*}, 0);*/
+            }
+        }
+    }
 
     ko.bindingHandlers.selected = {
         update: function(element, valueAccessor) {
             var value = ko.unwrap(valueAccessor());
+
 
             if (value) element.select();
         }

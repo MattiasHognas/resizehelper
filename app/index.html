@@ -47,48 +47,12 @@
                     
                 </div>
                 
-                <div class="col-md-9">
-                    <!-- ko if: !$.isEmptyObject(activeImage()) && activeImage().showProperties() -->
+                <div class="col-md-9" data-bind="visible: !$.isEmptyObject(activeImage()) && activeImage().showProperties()">
                     <h2>Image properties</h2>
 
                     <div class="row">
                         <div class="col-md-12 col-lg-5">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <h4 class="styledHeader">
-                                        <span>Sizes</span>
-                                    </h4>
-
-                                    <button data-bind="click: function() { addSize() }" type="button" class="btn btn-sm btn-success">
-                                        Add new size&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-
-                                    <table data-bind="if: activeImage().sizes().length > 0" class="table table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="3">Width</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody data-bind="sortable: { data: activeImage().sizes, options: { handle: '.sortable-handle' } }">
-                                            <tr>
-                                                <td>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon" data-bind="text: name + ' width:'"></span>
-                                                        <input class="form-control" type="number" data-bind="value: width" />
-                                                    </div>
-                                                </td>
-                                                <td class="sortable-handle" style="vertical-align: middle;">
-                                                    <span class="glyphicon glyphicon-move"></span>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <button data-bind="click: function() { $root.removeSize(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <!-- ko if: activeImage().sizes().length > 0 || activeImage().breakpoints().length > 0 -->
                                 <div class="col-md-12">
                                     <h4 class="styledHeader">
                                         <span>Media queries</span>
@@ -106,7 +70,7 @@
                                                 <th colspan="3">The image will be shown at:</th>
                                             </tr>
                                         </thead>
-                                        <tbody data-bind="sortable: { data: activeImage().breakpoints, options: { handle: '.sortable-handle' } }">
+                                        <tbody data-bind="sortable: { data: activeImage().breakpoints, connectClass: 'sort-media', options: { handle: '.sortable-handle' } }">
                                             <tr>
                                                 <td>
                                                     <div class="input-group input-group-sm">
@@ -152,17 +116,54 @@
                                     </table>
                                     <!-- /ko -->
                                 </div>
-                                <!-- /ko -->
 
-                                <!-- ko if: activeImage().sizes().length > 0 && activeImage().breakpoints().length > 0 -->
+                                <div class="col-md-12">
+                                    <h4 class="styledHeader">
+                                        <span>Sizes</span>
+                                    </h4>
+
+                                    <button data-bind="click: function() { addSize({ editing: 'name' }) }" type="button" class="btn btn-sm btn-success">
+                                        Add new size&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+
+                                    <table data-bind="if: activeImage().sizes().length > 0" class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th colspan="3">Width</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="sortable: { data: activeImage().sizes, connectClass: 'sort-sizes', options: { handle: '.sortable-handle' } }">
+                                            <tr>
+                                                <td style="width: 50%; vertical-align: middle;">
+                                                    <div data-bind="visible: !isEditing(name)">
+                                                        <span style="width: 100%; display: inline-block;" data-bind="text: name, click: function() { editing(name) }"></span>
+                                                    </div>
+                                                    <div data-bind="visibleAndSelect: isEditing(name)">
+                                                        <input type="text" data-bind="value: name, event: { blur: function() { clearEdit(name) } }">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="number" data-bind="value: width, event: { onfocus: function() { editing(width) }, blur: function() { clearEdit(width) } }">
+                                                </td>
+                                                <td class="sortable-handle" style="vertical-align: middle;">
+                                                    <span class="glyphicon glyphicon-move"></span>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    <button data-bind="click: function() { $root.removeSize(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
                                 <div class="col-md-12">
                                     <h4 class="styledHeader">
                                         <span>Output</span>
                                     </h4>
 
-                                    <pre><code id="js-output" class="html"></code></pre>
+                                    <pre><code id="js-output" class="html" style="white-space: pre;"></code></pre>
                                 </div>
-                                <!-- /ko -->
                             </div>
                             
                         </div>
@@ -218,7 +219,6 @@
                         <!-- /ko -->
                     </div>
 
-                    <!-- /ko -->
                 </div>
 
             </div>
