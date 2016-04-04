@@ -22,7 +22,7 @@
                 <div class="col-md-3">
                     <h2>Images</h2>
 
-                    <button data-bind="click: function() { addImage({ editMode: true }) }" type="button" class="btn btn-sm btn-success">
+                    <button data-bind="click: function() { addImage({ editing: 'name' }) }" type="button" class="btn btn-sm btn-success">
                         Add new image&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
                     </button>
 
@@ -35,8 +35,15 @@
                         <tbody data-bind="foreach: images">
                             <tr data-bind="click: function() { $root.setActiveImage(id) }, css: { active: active() }" style="cursor: pointer;">
                                 <td style="vertical-align: middle;">
-                                    <span data-bind="visible: !editMode(), text: name, click: edit"></span>
-                                    <input type="text" data-bind="visible: editMode, value: name, hasFocus: editMode, selected: editMode"/>
+                                    
+                                    <span data-bind="visible: !isEditing(name)">
+                                        <span data-bind="text: name, click: function() { editing(name) }"></span>
+                                    </span>
+                                    <span data-bind="visibleAndSelect: isEditing(name)">
+                                        <input class="form-control" type="text" data-bind="value: name, event: { blur: function() { clearEdit(name) } }">
+                                    </span>
+        
+
                                 </td>
                                 <td style="text-align: right;">
                                     <button data-bind="click: function() { $root.removeImage(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -62,8 +69,7 @@
                                         Add new query&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
                                     </button>
                                     
-                                    <!-- ko if: activeImage().breakpoints().length > 0 -->
-                                    <table class="table table-condensed">
+                                    <table data-bind="visible: activeImage().breakpoints().length > 0" class="table table-condensed">
                                         <thead>
                                             <tr>
                                                 <th>When the viewport is:</th>
@@ -114,7 +120,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <!-- /ko -->
                                 </div>
 
                                 <div class="col-md-12">
@@ -126,7 +131,7 @@
                                         Add new size&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
                                     </button>
 
-                                    <table data-bind="if: activeImage().sizes().length > 0" class="table table-condensed">
+                                    <table data-bind="visible: activeImage().sizes().length > 0" class="table table-condensed">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -140,11 +145,11 @@
                                                         <span style="width: 100%; display: inline-block;" data-bind="text: name, click: function() { editing(name) }"></span>
                                                     </div>
                                                     <div data-bind="visibleAndSelect: isEditing(name)">
-                                                        <input type="text" data-bind="value: name, event: { blur: function() { clearEdit(name) } }">
+                                                        <input class="form-control" type="text" data-bind="value: name, event: { blur: function() { clearEdit(name) } }">
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input type="number" data-bind="value: width, event: { onfocus: function() { editing(width) }, blur: function() { clearEdit(width) } }">
+                                                    <input class="form-control" type="number" data-bind="value: width, event: { onfocus: function() { editing(width) }, blur: function() { clearEdit(width) } }">
                                                 </td>
                                                 <td class="sortable-handle" style="vertical-align: middle;">
                                                     <span class="glyphicon glyphicon-move"></span>
@@ -188,8 +193,8 @@
                                         <td data-bind="text: density"></td>
                                         <td data-bind="text: usingSize"></td>
                                         <td data-bind="text: loss"></td>
-                                        <td><span class="glyphicon glyphicon-flag"></span></td>
-                                        <!-- data-bind="click: toggleFlag" -->
+                                        <td><span data-bind="click: function() { toggleFlag() }" style="cursor: pointer;" class="glyphicon glyphicon-flag"></span></td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -211,7 +216,7 @@
                                         <td data-bind="text: density"></td>
                                         <td data-bind="text: usingSize"></td>
                                         <td data-bind="text: loss"></td>
-                                        <td><span class="glyphicon glyphicon-flag"></span></td>
+                                        <td><span data-bind="click: function() { toggleFlag() }" style="cursor: pointer; color: #ccc;" class="glyphicon glyphicon-flag"></span></td>
                                     </tr>
                                 </tbody>
                             </table>

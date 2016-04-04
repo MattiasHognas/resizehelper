@@ -39,7 +39,7 @@
         image: {
             name: 'image',
             active: false,
-            editMode: false,
+            editing: undefined,
             showProperties: false
         },
         size: {
@@ -91,24 +91,32 @@
 
         self.id = set.id;
         self.name = ko.observable(set.name);
-        self.editMode = ko.observable(set.editMode);
         self.sizes = ko.observableArray(set.sizes);
         self.breakpoints = ko.observableArray(set.breakpoints);
         self.active = ko.observable(set.active);
         self.showProperties = ko.observable(set.showProperties);
+        self.editing = ko.observable();
 
-        self.edit = function() {
-            self.editMode(true);
+        if(set.editing !== undefined) {
+            self.editing(self[set.editing]);
+        }
+        self.isEditing = function(value) {
+            return value === self.editing();
         };
+        self.clearEdit = function(value) {
+            if (value === self.editing()) {
+                self.editing(null);
+            }
+        }
 
         ko.computed(function() {
-            if(!self.showProperties() && !self.editMode()) {
+            if(self.showProperties()) return
+
+            if(self.editing() === null || self.sizes().length > 0 || self.breakpoints().length > 0) {
                 self.showProperties(true);
             }
         });
 
-        // there's some problem with this where it doesnt change
-        // even though data has been added or removed.
         self.output = ko.computed(function() {
             var outputHtml = '&lt;img ';
             var sizes = self.sizes();
@@ -175,7 +183,6 @@
                 self.editing(null);
             }
         }
-
     }
     function Breakpoint(options) {
         var self = this;
@@ -220,6 +227,14 @@
         self.density = set.density;
         self.flagged = ko.observable(set.flagged);
         self.usingSize = ko.observable('-');
+
+        self.toggleFlag = function() {
+            if(self.flagged()) {
+                self.flagged(false);
+            } else {
+                self.flagged(true);
+            }
+        }
 
         self.loss = ko.computed(function () {
             var loss;
