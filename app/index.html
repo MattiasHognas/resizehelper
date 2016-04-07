@@ -1,247 +1,287 @@
 <!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Resize Helper</title>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resize helper</title>
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#eeeeee">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#eeeeee">
+    <!-- Place favicon.ico in the root directory -->
 
-        <!-- Custom styles -->
-        <link rel="stylesheet" href="styles/main.css">
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
 
-    </head>
-    <body>
-
-        <div class="container-fluid">
-            <div class="row">
-                
-                <div class="col-md-3">
-                    <h2>Images</h2>
-
-                    <button data-bind="click: function() { addImage({ editing: 'name' }) }" type="button" class="btn btn-sm btn-success">
-                        Add new image&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
-                    </button>
-
-                    <table data-bind="if: images().length > 0" class="table">
-                        <thead>
-                            <tr>
-                                <th colspan="2">Name</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: images">
-                            <tr data-bind="click: function() { $root.setActiveImage(id) }, css: { active: active() }" style="cursor: pointer;">
-                                <td style="vertical-align: middle;">
-                                    
-                                    <span data-bind="visible: !isEditing(name)">
-                                        <span data-bind="text: name, click: function() { editing(name) }"></span>
-                                    </span>
-                                    <span data-bind="visibleAndSelect: isEditing(name)">
-                                        <input class="form-control" type="text" data-bind="value: name, event: { blur: function() { clearEdit(name) } }">
-                                    </span>
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    
+    <div class="container-fluid">
+      <div class="row">
         
+        <div class="col-md-3">
+          <h2>Images</h2>
 
-                                </td>
-                                <td style="text-align: right;">
-                                    <button data-bind="click: function() { $root.removeImage(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                </div>
-                
-                <div class="col-md-9" data-bind="visible: !$.isEmptyObject(activeImage()) && activeImage().showProperties()">
-                    <h2>Image properties</h2>
+          <button data-bind="click: function() { addImage({ editing: 'name' }) }" type="button" class="btn btn-sm btn-success">
+            Add new image&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
+          </button>
 
-                    <div class="row">
-                        <div class="col-md-12 col-lg-5">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4 class="styledHeader">
-                                        <span>Media queries</span>
-                                    </h4>
+          <table data-bind="if: images().length > 0" class="table">
+            <thead>
+              <tr>
+                <th colspan="2">Name</th>
+              </tr>
+            </thead>
+            <tbody data-bind="foreach: images">
+              <tr data-bind="click: function() { $root.setActiveImage(id) }, css: { active: active() }" style="cursor: pointer;">
+                <td style="vertical-align: middle;">
+                  
+                  <span data-bind="visible: !isEditing(name)">
+                    <span data-bind="text: name, click: function() { editing(name) }"></span>
+                  </span>
+                  <span data-bind="visibleAndSelect: isEditing(name)">
+                    <input class="form-control" type="text" data-bind="value: name, event: { blur: function() { clearEdit(name) } }">
+                  </span>
+    
 
-                                    <button data-bind="click: function() { addBreakpoint() }" type="button" class="btn btn-sm btn-success">
-                                        Add new query&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                    
-                                    <table data-bind="visible: activeImage().breakpoints().length > 0" class="table table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th>When the viewport is:</th>
-                                                <th colspan="3">The image will be shown at:</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody data-bind="sortable: { data: activeImage().breakpoints, connectClass: 'sort-media', options: { handle: '.sortable-handle' } }">
-                                            <tr>
-                                                <td>
-                                                    <div class="input-group input-group-sm">
-                                                        <div class="input-group-btn">
-                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                                <span data-bind="text: verboseType()"></span>&nbsp;<span class="caret"></span>
-                                                            </button>
-                                                            <ul class="dropdown-menu dropdown-menu-left">
-                                                                <li>
-                                                                    <a href="#" data-bind="click: function() { type('min-width') }">larger than</a>
-                                                                    <a href="#" data-bind="click: function() { type('max-width') }">smaller than</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <input type="number" class="form-control" data-bind="value: breakWidth">
-                                                        <span class="input-group-addon">px</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="input-group input-group-sm">
-                                                        <input type="number" class="form-control" data-bind="value: displayWidth">
-                                                        <div class="input-group-btn">
-                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                                <span data-bind="text: unit"></span>&nbsp;<span class="caret"></span>
-                                                            </button>
-                                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                                <li>
-                                                                    <a href="#" data-bind="click: function() { unit('vw') }">vw</a>
-                                                                    <a href="#" data-bind="click: function() { unit('px') }">px</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="sortable-handle" style="vertical-align: middle;">
-                                                    <span class="glyphicon glyphicon-move"></span>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <button data-bind="click: function() { $root.removeBreakpoint(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <h4 class="styledHeader">
-                                        <span>Sizes</span>
-                                    </h4>
-
-                                    <button data-bind="click: function() { addSize({ editing: 'name' }) }" type="button" class="btn btn-sm btn-success">
-                                        Add new size&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-
-                                    <table data-bind="visible: activeImage().sizes().length > 0" class="table table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th colspan="3">Width</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody data-bind="sortable: { data: activeImage().sizes, connectClass: 'sort-sizes', options: { handle: '.sortable-handle' } }">
-                                            <tr>
-                                                <td style="width: 50%; vertical-align: middle;">
-                                                    <div data-bind="visible: !isEditing(name)">
-                                                        <span style="width: 100%; display: inline-block;" data-bind="text: name, click: function() { editing(name) }"></span>
-                                                    </div>
-                                                    <div data-bind="visibleAndSelect: isEditing(name)">
-                                                        <input class="form-control" type="text" data-bind="value: name, event: { blur: function() { clearEdit(name) } }">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" type="number" data-bind="value: width, event: { onfocus: function() { editing(width) }, blur: function() { clearEdit(width) } }">
-                                                </td>
-                                                <td class="sortable-handle" style="vertical-align: middle;">
-                                                    <span class="glyphicon glyphicon-move"></span>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <button data-bind="click: function() { $root.removeSize(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                
-                                <div class="col-md-12">
-                                    <h4 class="styledHeader">
-                                        <span>Output</span>
-                                    </h4>
-
-                                    <pre><code id="js-output" class="html" style="white-space: pre;"></code></pre>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        
-                        <!-- ko if: activeImage().sizes().length > 0 && activeImage().breakpoints().length > 0 -->
-                        <div class="col-md-12 col-lg-7">
-                            <h4>Flagged devices</h4>
-
-                            <table class="table">
-                                <thead>
-                                    <th>Name</th>
-                                    <th>Width</th>
-                                    <th><span class="glyphicon glyphicon-resize-full" title="pixel density"></span></th>
-                                    <th title="which image size that results in the least loss">Using size</th>
-                                    <th title="how much of the image that is essentialy lost in the resize because the used size is bigger than the devices viewport">Loss</th>
-                                    <th></th>
-                                </thead>
-                                <tbody data-bind="foreach: _.filter(devices(), function(item) { return item.flagged() === true })">
-                                    <tr>
-                                        <td data-bind="text: name"></td>
-                                        <td data-bind="text: width"></td>
-                                        <td data-bind="text: density"></td>
-                                        <td data-bind="text: usingSize"></td>
-                                        <td data-bind="text: loss"></td>
-                                        <td><span data-bind="click: function() { toggleFlag() }" style="cursor: pointer;" class="glyphicon glyphicon-flag"></span></td>
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <h4>Other devices</h4>
-                            <table class="table">
-                                <thead>
-                                    <th>Name</th>
-                                    <th>Width</th>
-                                    <th><span class="glyphicon glyphicon-resize-full" title="pixel density"></span></th>
-                                    <th title="which image size that results in the least loss">Using size</th>
-                                    <th title="how much of the image that is essentialy lost in the resize because the used size is bigger than the devices viewport">Loss</th>
-                                    <th></th>
-                                </thead>
-                                <tbody data-bind="foreach: _.filter(devices(), function(item) { return item.flagged() === false })">
-                                    <tr>
-                                        <td data-bind="text: name"></td>
-                                        <td data-bind="text: width"></td>
-                                        <td data-bind="text: density"></td>
-                                        <td data-bind="text: usingSize"></td>
-                                        <td data-bind="text: loss"></td>
-                                        <td><span data-bind="click: function() { toggleFlag() }" style="cursor: pointer; color: #ccc;" class="glyphicon glyphicon-flag"></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /ko -->
-                    </div>
-
-                </div>
-
-            </div>
+                </td>
+                <td style="text-align: right;">
+                  <button data-bind="click: function() { $root.removeImage(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
         </div>
         
-        <footer>
-            <!-- Scripts -->
-            <script src="scripts/vendor/jquery-1.11.3.min.js"></script>
-            <script src="scripts/vendor/jquery-ui.min.js"></script>
-            <script src="scripts/vendor/amplify.min.js"></script>
-            <script src="scripts/vendor/underscore-min.js"></script>
-            <script src="scripts/vendor/knockout-3.4.0.js"></script>
-            <script src="scripts/vendor/knockout.mapping-latest.js"></script>
-            <script src="scripts/vendor/knockout-sortable.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+        <div class="col-md-9" data-bind="visible: !$.isEmptyObject(activeImage()) && activeImage().showProperties()">
+          <h2>Image properties</h2>
 
-            <!-- Custom scripts -->
-            <script src="scripts/main.js"></script>
-        </footer>
-    </body>
+          <div class="row">
+            <div class="col-md-12 col-lg-5">
+              <div class="row">
+                <div class="col-md-12">
+                  <h4 class="styledHeader">
+                    <span>Media queries</span>
+                  </h4>
+
+                  <button data-bind="click: function() { addBreakpoint() }" type="button" class="btn btn-sm btn-success">
+                    Add new query&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                  
+                  <table data-bind="visible: activeImage().breakpoints().length > 0" class="table table-condensed">
+                    <thead>
+                      <tr>
+                        <th>When the viewport is:</th>
+                        <th colspan="3">The image will be shown at:</th>
+                      </tr>
+                    </thead>
+                    <tbody data-bind="sortable: { data: activeImage().breakpoints, connectClass: 'sort-media', options: { handle: '.sortable-handle' } }">
+                      <tr>
+                        <td>
+                          <div class="input-group input-group-sm">
+                            <div class="input-group-btn">
+                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span data-bind="text: verboseType()"></span>&nbsp;<span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                <li>
+                                  <a href="#" data-bind="click: function() { type('min-width') }">larger than</a>
+                                  <a href="#" data-bind="click: function() { type('max-width') }">smaller than</a>
+                                </li>
+                              </ul>
+                            </div>
+                            <input type="number" class="form-control" data-bind="value: breakWidth">
+                            <span class="input-group-addon">px</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" data-bind="value: displayWidth">
+                            <div class="input-group-btn">
+                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span data-bind="text: unit"></span>&nbsp;<span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                  <a href="#" data-bind="click: function() { unit('vw') }">vw</a>
+                                  <a href="#" data-bind="click: function() { unit('px') }">px</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="sortable-handle" style="vertical-align: middle;">
+                          <span class="glyphicon glyphicon-move"></span>
+                        </td>
+                        <td style="vertical-align: middle;">
+                          <button data-bind="click: function() { $root.removeBreakpoint(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="col-md-12">
+                  <h4 class="styledHeader">
+                    <span>Sizes</span>
+                  </h4>
+
+                  <button data-bind="click: function() { addSize({ editing: 'name' }) }" type="button" class="btn btn-sm btn-success">
+                    Add new size&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
+                  </button>
+
+                  <table data-bind="visible: activeImage().sizes().length > 0" class="table table-condensed">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th colspan="3">Width</th>
+                      </tr>
+                    </thead>
+                    <tbody data-bind="sortable: { data: activeImage().sizes, connectClass: 'sort-sizes', options: { handle: '.sortable-handle' } }">
+                      <tr>
+                        <td style="width: 50%; vertical-align: middle;">
+                          <div data-bind="visible: !isEditing(name)">
+                            <span style="width: 100%; display: inline-block;" data-bind="text: name, click: function() { editing(name) }"></span>
+                          </div>
+                          <div data-bind="visibleAndSelect: isEditing(name)">
+                            <input class="form-control" type="text" data-bind="value: name, event: { blur: function() { clearEdit(name) } }">
+                          </div>
+                        </td>
+                        <td>
+                          <input class="form-control" type="number" data-bind="value: width, event: { onfocus: function() { editing(width) }, blur: function() { clearEdit(width) } }">
+                        </td>
+                        <td class="sortable-handle" style="vertical-align: middle;">
+                          <span class="glyphicon glyphicon-move"></span>
+                        </td>
+                        <td style="vertical-align: middle;">
+                          <button data-bind="click: function() { $root.removeSize(id) }" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div class="col-md-12">
+                  <h4 class="styledHeader">
+                    <span>Output</span>
+                  </h4>
+
+                  <pre><code id="js-output" class="html" style="white-space: pre;"></code></pre>
+                </div>
+              </div>
+              
+            </div>
+            
+            <!-- ko if: activeImage().sizes().length > 0 && activeImage().breakpoints().length > 0 -->
+            <div class="col-md-12 col-lg-7">
+              <h4>Flagged devices</h4>
+
+              <table class="table">
+                <thead>
+                  <th>Name</th>
+                  <th>Width</th>
+                  <th><span class="glyphicon glyphicon-resize-full" title="pixel density"></span></th>
+                  <th title="which image size that results in the least loss">Using size</th>
+                  <th title="how much of the image that is essentialy lost in the resize because the used size is bigger than the devices viewport">Loss</th>
+                  <th></th>
+                </thead>
+                <tbody data-bind="foreach: _.filter(devices(), function(item) { return item.flagged() === true })">
+                  <tr>
+                    <td data-bind="text: name"></td>
+                    <td data-bind="text: width"></td>
+                    <td data-bind="text: density"></td>
+                    <td data-bind="text: usingSize"></td>
+                    <td data-bind="text: loss"></td>
+                    <td><span data-bind="click: function() { toggleFlag() }" style="cursor: pointer;" class="glyphicon glyphicon-flag"></span></td>
+                    
+                  </tr>
+                </tbody>
+              </table>
+
+              <h4>Other devices</h4>
+              <table class="table">
+                <thead>
+                  <th>Name</th>
+                  <th>Width</th>
+                  <th><span class="glyphicon glyphicon-resize-full" title="pixel density"></span></th>
+                  <th title="which image size that results in the least loss">Using size</th>
+                  <th title="how much of the image that is essentialy lost in the resize because the used size is bigger than the devices viewport">Loss</th>
+                  <th></th>
+                </thead>
+                <tbody data-bind="foreach: _.filter(devices(), function(item) { return item.flagged() === false })">
+                  <tr>
+                    <td data-bind="text: name"></td>
+                    <td data-bind="text: width"></td>
+                    <td data-bind="text: density"></td>
+                    <td data-bind="text: usingSize"></td>
+                    <td data-bind="text: loss"></td>
+                    <td><span data-bind="click: function() { toggleFlag() }" style="cursor: pointer; color: #ccc;" class="glyphicon glyphicon-flag"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /ko -->
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/knockout/dist/knockout.js"></script>
+    <script src="/bower_components/knockout-sortable/build/knockout-sortable.min.js"></script>
+    <script src="/bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    
+    <!-- build:js scripts/plugins.js -->
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/button.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
+    <!-- endbuild -->
+    
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+  </body>
 </html>

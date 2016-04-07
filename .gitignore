@@ -1,4 +1,6 @@
 node_modules
-dist/
+dist
 .tmp
-app.yaml
+.sass-cache
+bower_components
+test/bower_components
