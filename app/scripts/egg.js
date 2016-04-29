@@ -13,6 +13,6 @@ var colors = [
 
 for (var row = rows; row > 0; row--) {
   for (var col = cols; col > 0; col--) {
-    $('#dancefloor').append('<div class="cube ' + colors[row % 2][col % 2] + '"></div>')
+    $('#dancefloor-main').append('<div class="cube ' + colors[row % 2][col % 2] + '"></div>')
   }
 }
