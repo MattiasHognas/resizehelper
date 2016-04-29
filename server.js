@@ -1,29 +1,18 @@
-const express = require('express');
-const serveStatic = require('serve-static');
-const compression = require('compression');
-const port = process.env.PORT || 3000;
-const domain =  process.env.DOMAIN;
+var express = require('express');
+var app = express();
 
-function ensureDomain(req, res, next) {
-  if (!domain || req.hostname === domain) {
-    // OK, continue
-    return next();
-  };
+app.set('port', (process.env.PORT || 5000));
 
-  // handle port numbers if you need non defaults
-  res.redirect(`http://${domain}${req.url}`);
-};
+app.use(express.static(__dirname + '/dist'));
 
-const app = express();
+app.get('/', function(request, response) {
+	response.render('dist/index');
+});
 
-// at top of routing calls
-app.all('*', ensureDomain);
+app.get('/egg', function(request, response) {
+	response.sendFile(__dirname + '/dist/egg.html');
+})
 
-app.use(compression());
-
-// default to .html (you can omit the extension in the URL)
-app.use(serveStatic(`${__dirname}/dist`, {'extensions': ['html']}));
-
-app.listen(port, () => {
-  console.log('Server running...');
+app.listen(app.get('port'), function() {
+	console.log('Node app is running on port', app.get('port'));
 });

@@ -1,0 +1,178 @@
+body {
+  background-color: black;
+  background: url('../images/stardust.png') center center;
+  
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    z-index: 5;
+    animation: flash-filter 1200ms infinite;
+    animation-timing-function: linear;
+  }
+  
+}
+
+.container {
+  width: 800px;
+  height: 800px;
+  margin: 0 auto;
+  position: absolute;
+  perspective: 1000px;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+
+  @media screen and (max-width: 767px) {
+    width: 500px;
+    height: 500px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+#dancefloor {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  transform: rotateX(65deg) rotateZ(45deg);
+  background-color: black;
+  backface-visibility: hidden;
+  border: 2px solid #111;
+}
+
+#dancer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: scale(3);
+  image-rendering: pixelated;
+  z-index: 3;
+  @media screen and (max-width: 767px) {
+    transform: scale(2) translateY(-15%);
+  }
+}
+
+@mixin cubeColorBase($color:white) {
+  background-color: $color;
+  animation: flash-#{$color} 1200ms infinite;
+  animation-timing-function: linear;
+}
+
+@mixin cubeOn($color:white) {
+  opacity: 1;
+  z-index: 2;
+  border-color: transparent;
+  box-shadow: 0 0 10px 2px $color;
+}
+@mixin cubeOff {
+  opacity: 0.3;
+  z-index: 1;
+  border-color: #333;
+  box-shadow: none;
+}
+
+.cube {
+  float: left;
+  width: calc(100% / 8);
+  padding-top: calc( (100% / 8) - 4px);
+  position: relative;
+  border: 2px solid black;
+  box-sizing: border-box;
+  z-index: 1;
+
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:before {
+    background: url('../images/lighttex.png') center center;
+    background-size: 100%;
+    opacity: 0.03;
+  }
+  
+  &:after {
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    opacity: 0.5;
+  }
+  
+  &.blue {
+    @include cubeColorBase(blue);
+  }
+  &.pink {
+    @include cubeColorBase(pink);
+  }
+  &.red {
+    @include cubeColorBase(red);
+  }
+  &.green {
+    @include cubeColorBase(green);
+  }
+}
+
+@keyframes flash-blue {
+  0%, 25% {
+    @include cubeOn(blue);
+  }
+  26%, 100% {
+    @include cubeOff;
+  }
+}
+
+@keyframes flash-pink {
+  26%, 50% {
+    @include cubeOn(pink);
+  }
+  0%, 25%, 51%, 100% {
+    @include cubeOff;
+  }
+}
+
+@keyframes flash-red {
+  51%, 75% {
+    @include cubeOn(red);
+  }
+  0%, 50%, 76%, 100% {
+    @include cubeOff;
+  }
+}
+
+@keyframes flash-green {
+  76%, 100% {
+    @include cubeOn(green);
+  }
+  0%, 75% {
+    @include cubeOff;
+  }
+}
+
+@keyframes flash-filter {
+  0%, 25% {
+    background-color: blue;
+  }
+  26%, 50% {
+    background-color: pink;
+  }
+  51%, 75% {
+    background-color: red;
+  }
+  76%, 100% {
+    background-color: green;
+  }
+}
