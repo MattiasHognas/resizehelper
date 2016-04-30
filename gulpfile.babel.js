@@ -24,7 +24,7 @@ gulp.task('styles', () => {
 
 gulp.task('ejs', () => {
   return gulp.src('app/*.ejs')
-    .pipe($.ejs({}, {ext: '.html'}))
+    .pipe($.ejs({}, {ext: '.html'}).on('error', $.util.log))
     .pipe(gulp.dest('.tmp'))
     .pipe(reload({stream: true}));
 });

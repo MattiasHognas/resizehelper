@@ -368,10 +368,10 @@ var viewmodel = new DevicesViewModel();
 // setting up some initial data, this will be moved once local storage is implemented.
 // also, intitial data might be removed once the 'intro' is in place.
 
-/*viewmodel.addImage({ name: 'Example image' });
-viewmodel.addSize({ width: 1600 });*/
-/*viewmodel.addSize({ width: 1200 });
-viewmodel.addSize({ width: 2000 });*/
+viewmodel.addImage({ name: 'Example image' });
+viewmodel.addSize({ width: 1600 });
+viewmodel.addSize({ width: 1200 });
+viewmodel.addSize({ width: 2000 });
 
 $.map(initialDevices, function (item) { viewmodel.addDevice(item); });
 
