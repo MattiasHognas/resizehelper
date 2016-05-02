@@ -4,7 +4,9 @@
     <% include partials/head.ejs %>
   </head>
   <body>
-
+    <div class="ribbon">
+      Alpha
+    </div>
     <div class="container-fluid">
       <div class="row">
         
@@ -33,11 +35,9 @@
               
             </div>
             
-            <!-- ko if: activeImage().sizes().length > 0 && activeImage().breakpoints().length > 0 -->
             <div class="col-md-12 col-lg-7">
               <% include partials/devices.ejs %>
             </div>
-            <!-- /ko -->
           </div>
 
         </div>

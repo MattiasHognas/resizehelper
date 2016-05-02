@@ -45,7 +45,7 @@ var defaults = {
     editing: undefined
   },
   breakpoint: {
-    type: 'max-width',
+    type: 'min-width',
     breakWidth: 0,
     displayWidth: 50,
     unit: 'vw'

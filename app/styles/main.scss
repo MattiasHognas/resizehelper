@@ -4,35 +4,6 @@ $icon-font-path: '../fonts/';
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
-
-.styledHeader {
-  text-align: center;
-  position: relative;
-
-  &:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    border-top: 1px solid black;
-    width: 100%;
-  }
-
-  > span {
-    background-color: white;
-    display: inline-block;
-    position: relative;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
 .sortable-handle {
   cursor: move;
 }
@@ -43,5 +14,33 @@ $icon-font-path: '../fonts/';
   }
   td {
     vertical-align: center;
+  }
+}
+
+.ribbon {
+  $color: blueviolet;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  height: 150px;
+  line-height: 150px;
+  width: 150px;
+  text-align: center;
+  font-size: 20px;
+  color: white;
+  transform: translate(20%, -20%) rotateZ(45deg);
+  z-index: 200;
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $color;
+    border: 2px solid mix(black, $color, 25%);
+    height: 40px;
+    width: 200%;
+    z-index: -1;
   }
 }
