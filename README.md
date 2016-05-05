@@ -38,3 +38,6 @@ Say you have a image thats 2000px wide, but are rendering it as 300px wide on mo
 After stumbling upon [this article on google developers](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization?hl=en#delivering-scaled-image-assets) where they calculate how many unnecessary pixels there would be if you load a larger image than what you will render it at, I got an idea to build this helper that would do the calculation and show you how much could be saved by resizing an image to a smaller format for a specific device.
 
 Hopefully this will make it easier to achieve a good balance between having a small enough size for all devices and having too many different sizes of the same picture (which could lead to slower download, depending on how you switch between the sizes).
+
+## Special Thanks
+Dennis Holmén (@deriel) for always finding the time to discuss ideas and showing interest in the project which has invigorated me to continue whenever I was stuck.
