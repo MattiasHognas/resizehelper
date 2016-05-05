@@ -9,9 +9,10 @@ app.get('/', function(request, response) {
 	response.render('dist/index');
 });
 
+/*
 app.get('/egg', function(request, response) {
 	response.sendFile(__dirname + '/dist/egg.html');
-})
+})*/
 
 app.listen(app.get('port'), function() {
 	console.log('Node app is running on port', app.get('port'));
