@@ -61,7 +61,7 @@ app.post('/save', function(request, response, next) {
 	}
 	var usage = new UsageModel({
 		images: values.images,
-		flagedDevices: values.flagedDevices
+		flaggedDevices: values.flaggedDevices
 	});
 	if (values.id) 
 		UsageModel.findOneAndUpdate({ '_id': values.id }, usage, function(err, model) {
@@ -101,6 +101,6 @@ var DeviceSchema = mongoose.Schema({
 var UsageSchema = mongoose.Schema({
 	_id: { type: String, default: uuid.v1 },
 	images: [ImageSchema],
-	flagedDevices: [DeviceSchema],
+	flaggedDevices: [DeviceSchema],
 });
 var UsageModel = mongoose.model('Usage', UsageSchema);
