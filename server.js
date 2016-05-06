@@ -32,10 +32,27 @@ function respondToSave(response, err, model) {
 		console.log('model not found');
 		response.status(500).send({ error: 'model not found' });
 	} else {
-		console.log('saved:' + m);
-		response.status(200).send(m);
+		console.log('saved:' + model);
+		response.status(200).send(model);
 	}
 }
+
+app.post('/load/:id', function(request, response, next) {
+	var values = request.params;
+	var id = request.params.id;
+	UsageModel.findOne({ '_id': id }, usage, function(err, model) {
+		if (err) {
+			console.log(err);
+			response.status(500).send({ error: err });
+		} else if (!model) {
+			console.log('model not found');
+			response.status(500).send({ error: 'model not found' });
+		} else {
+			console.log('loaded:' + model);
+			response.status(200).send(model);
+		}
+	});
+});
 
 app.post('/save', function(request, response, next) {
 	var values = request.body;
