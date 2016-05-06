@@ -38,7 +38,6 @@ function respondToSave(response, err, model) {
 }
 
 app.post('/load/:id', function(request, response, next) {
-	var values = request.params;
 	var id = request.params.id;
 	UsageModel.findOne({ '_id': id }, usage, function(err, model) {
 		if (err) {
